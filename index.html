@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIMCET Smart Calculator Pro</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #eef2f3;
+            margin: 0;
+            padding: 10px;
+            color: #333;
+        }
+        .app-container {
+            max-width: 440px;
+            margin: 20px auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+        h2 {
+            text-align: center;
+            color: #1e293b;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        .card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+        }
+        .card-header {
+            font-weight: bold;
+            font-size: 13px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .math-theme { border-left: 4px solid #ef4444; color: #dc2626; }
+        .lr-theme { border-left: 4px solid #3b82f6; color: #2563eb; }
+        .comp-theme { border-left: 4px solid #f59e0b; color: #d97706; }
+        .eng-theme { border-left: 4px solid #8b5cf6; color: #7c3aed; }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        label {
+            font-size: 12px;
+            color: #64748b;
+        }
+        input {
+            width: 70px;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+        .unattempted-text {
+            font-size: 11px;
+            color: #0d9488;
+            font-weight: bold;
+            margin-top: 4px;
+            text-align: right;
+        }
+        .calc-btn {
+            width: 100%;
+            background: #0f172a;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+        .calc-btn:hover { background: #1e293b; }
+        .output-box {
+            margin-top: 15px;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+        }
+        .output-box h3 {
+            margin: 0 0 10px 0;
+            color: #166534;
+            font-size: 16px;
+            text-align: center;
+        }
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            margin-bottom: 6px;
+            border-bottom: 1px dashed #dcfce7;
+            padding-bottom: 4px;
+        }
+        .final-score {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: #c2410c;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <h2>NIMCET Smart Calculator Pro</h2>
+
+    <!-- Mathematics -->
+    <div class="card math-theme">
+        <div class="card-header"><span>Mathematics</span> <span>(+12 / -3)</span></div>
+        <div class="row"><label>Total Qs:</label><input type="number" id="m_total" value="50"></div>
+        <div class="row"><label>Correct:</label><input type="number" id="m_c" value="0" min="0"></div>
+        <div class="row"><label>Incorrect:</label><input type="number" id="m_w" value="0" min="0"></div>
+        <div class="unattempted-text">Unattempted: <span id="m_u_display">50</span></div>
+    </div>
+
+    <!-- Logical Reasoning -->
+    <div class="card lr-theme">
+        <div class="card-header"><span>Logical Reasoning</span> <span>(+6 / -1.5)</span></div>
+        <div class="row"><label>Total Qs:</label><input type="number" id="lr_total" value="40"></div>
+        <div class="row"><label>Correct:</label><input type="number" id="lr_c" value="0" min="0"></div>
+        <div class="row"><label>Incorrect:</label><input type="number" id="lr_w" value="0" min="0"></div>
+        <div class="unattempted-text">Unattempted: <span id="lr_u_display">40</span></div>
+    </div>
+
+    <!-- Computer Awareness -->
+    <div class="card comp-theme">
+        <div class="card-header"><span>Computer Awareness</span> <span>(+6 / -1.5)</span></div>
+        <div class="row"><label>Total Qs:</label><input type="number" id="c_total" value="20"></div>
+        <div class="row"><label>Correct:</label><input type="number" id="c_c" value="0" min="0"></div>
+        <div class="row"><label>Incorrect:</label><input type="number" id="c_w" value="0" min="0"></div>
+        <div class="unattempted-text">Unattempted: <span id="c_u_display">20</span></div>
+    </div>
+
+    <!-- General English -->
+    <div class="card eng-theme">
+        <div class="card-header"><span>General English</span> <span>(+4 / -1)</span></div>
+        <div class="row"><label>Total Qs:</label><input type="number" id="e_total" value="10"></div>
+        <div class="row"><label>Correct:</label><input type="number" id="e_c" value="0" min="0"></div>
+        <div class="row"><label>Incorrect:</label><input type="number" id="e_w" value="0" min="0"></div>
+        <div class="unattempted-text">Unattempted: <span id="e_u_display">10</span></div>
+    </div>
+
+    <button class="calc-btn" onclick="evaluateTest()">Calculate My Score</button>
+
+    <div class="output-box" id="outputSection">
+        <h3>Performance Summary</h3>
+        <div class="result-row"><span>Maths Score:</span> <span id="out_m">0</span></div>
+        <div class="result-row"><span>Logical Reasoning Score:</span> <span id="out_lr">0</span></div>
+        <div class="result-row"><span>Computer Score:</span> <span id="out_c">0</span></div>
+        <div class="result-row"><span>English Score:</span> <span id="out_e">0</span></div>
+        <div class="final-score" id="out_total">Total: 0 / 1000</div>
+    </div>
+</div>
+
+<script>
+// Real-time unattempted calculation as user types
+function setupAutoCalculate() {
+    const sections = ['m', 'lr', 'c', 'e'];
+    sections.forEach(sec => {
+        ['total', 'c', 'w'].forEach(type => {
+            document.getElementById(`${sec}_${type}`).addEventListener('input', () => {
+                let total = parseInt(document.getElementById(`${sec}_total`).value) || 0;
+                let correct = parseInt(document.getElementById(`${sec}_c`).value) || 0;
+                let incorrect = parseInt(document.getElementById(`${sec}_w`).value) || 0;
+                let unattempted = total - (correct + incorrect);
+                
+                let display = document.getElementById(`${sec}_u_display`);
+                if (unattempted < 0) {
+                    display.innerText = "Error (Exceeds Total!)";
+                    display.style.color = "red";
+                } else {
+                    display.innerText = unattempted;
+                    display.style.color = "#0d9488";
+                }
+            });
+        });
+    });
+}
+
+setupAutoCalculate();
+
+function evaluateTest() {
+    // Get Total Qs to calculate maximum possible score dynamically
+    let mTotal = parseInt(document.getElementById('m_total').value) || 0;
+    let lrTotal = parseInt(document.getElementById('lr_total').value) || 0;
+    let cTotal = parseInt(document.getElementById('c_total').value) || 0;
+    let eTotal = parseInt(document.getElementById('e_total').value) || 0;
+
+    let maxPossibleScore = (mTotal * 12) + (lrTotal * 6) + (cTotal * 6) + (eTotal * 4);
+
+    // Maths (+12, -3)
+    let mC = parseInt(document.getElementById('m_c').value) || 0;
+    let mW = parseInt(document.getElementById('m_w').value) || 0;
+    let mathScore = (mC * 12) - (mW * 3);
+
+    // Logical Reasoning (+6, -1.5)
+    let lrC = parseInt(document.getElementById('lr_c').value) || 0;
+    let lrW = parseInt(document.getElementById('lr_w').value) || 0;
+    let lrScore = (lrC * 6) - (lrW * 1.5);
+
+    // Computer (+6, -1.5)
+    let cC = parseInt(document.getElementById('c_c').value) || 0;
+    let cW = parseInt(document.getElementById('c_w').value) || 0;
+    let compScore = (cC * 6) - (cW * 1.5);
+
+    // English (+4, -1)
+    let eC = parseInt(document.getElementById('e_c').value) || 0;
+    let eW = parseInt(document.getElementById('e_w').value) || 0;
+    let engScore = (eC * 4) - (eW * 1);
+
+    let netTotal = mathScore + lrScore + compScore + engScore;
+
+    document.getElementById('out_m').innerText = mathScore;
+    document.getElementById('out_lr').innerText = lrScore;
+    document.getElementById('out_c').innerText = compScore;
+    document.getElementById('out_e').innerText = engScore;
+    document.getElementById('out_total').innerText = "Total Score: " + netTotal + " / " + maxPossibleScore;
+
+    document.getElementById('outputSection').style.display = 'block';
+}
+</script>
+
+</body>
+</html>
