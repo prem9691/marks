@@ -1,0 +1,13 @@
+{
+  "background_color": "rgb(45, 41, 41)",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "marks",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "marks",
+  "start_url": "/",
+  "theme_color": "#ffffff",
+  "description": "NIMCET Score Calculator",
+  "id": "com.nimcet.calculator"
+}
